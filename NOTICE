@@ -1,0 +1,17 @@
+CipherPaths
+Copyright 2026 Coogee Code Pty. Ltd. Australia
+https://www.coogeecode.com.au/
+
+This product includes software developed by Coogee Code Pty. Ltd.
+Project website: https://cipherpaths.com/
+
+Licensed under the Apache License, Version 2.0. See the LICENSE file for the
+full license text.
+
+------------------------------------------------------------------------------
+Third-party dependencies
+------------------------------------------------------------------------------
+
+This software links against OpenSSL (https://www.openssl.org/), which is
+licensed under the Apache License, Version 2.0. OpenSSL is not distributed as
+part of this source repository.

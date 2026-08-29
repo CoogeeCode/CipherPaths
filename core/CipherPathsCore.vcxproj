@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CipherPathsCore - portable static library, MSVC project.
+     OpenSSL headers come from the pre-built static package under
+     Static-Libs\OpenSSL\$(Platform)\include (only libcrypto is used - no TLS).
+     The same sources also build with CMake on Linux/macOS. -->
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{5F969D00-A882-40DA-81AA-C6788726B8C4}</ProjectGuid>
+    <RootNamespace>CipherPathsCore</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <!-- OpenSSL is the ONLY third-party dependency of the core. Headers come
+         from the pre-built static package under Static-Libs\OpenSSL\$(Platform)\include
+         (only libcrypto is used - no TLS). The include path is set below for all
+         platforms; the static libcrypto.lib is linked by the final .exe. -->
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Release'">false</UseDebugLibraries>
+    <WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- OpenSSL headers from the pre-built static package (all platforms).
+       Uses ExternalIncludePath so the headers are treated as external and do
+       not trigger /W4 warnings when building the core. -->
+  <PropertyGroup>
+    <ExternalIncludePath>$(SolutionDir)Static-Libs\OpenSSL\$(Platform)\include;$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\Static-Libs\CipherPathsCore\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>IntermediateFiles\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\Static-Libs\CipherPathsCore\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>IntermediateFiles\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <OutDir>$(SolutionDir)\Static-Libs\CipherPathsCore\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>IntermediateFiles\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <OutDir>$(SolutionDir)\Static-Libs\CipherPathsCore\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>IntermediateFiles\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <WarningLevel>Level4</WarningLevel>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization Condition="'$(Configuration)'=='Release'">MaxSpeed</Optimization>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Release'">MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\cipherpaths\CipherPaths.h" />
+    <ClInclude Include="include\cipherpaths\Crypto.h" />
+    <ClInclude Include="include\cipherpaths\Encoding.h" />
+    <ClInclude Include="include\cipherpaths\EncryptedFileSystem.h" />
+    <ClInclude Include="include\cipherpaths\Errors.h" />
+    <ClInclude Include="include\cipherpaths\Json.h" />
+    <ClInclude Include="include\cipherpaths\NameCodec.h" />
+    <ClInclude Include="include\cipherpaths\NotesService.h" />
+    <ClInclude Include="include\cipherpaths\PasswordEntry.h" />
+    <ClInclude Include="include\cipherpaths\SearchService.h" />
+    <ClInclude Include="include\cipherpaths\SecureBuffer.h" />
+    <ClInclude Include="include\cipherpaths\Vault.h" />
+    <ClInclude Include="include\cipherpaths\VaultManager.h" />
+    <ClInclude Include="include\cipherpaths\ViewerService.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Crypto.cpp" />
+    <ClCompile Include="src\Encoding.cpp" />
+    <ClCompile Include="src\EncryptedFileSystem.cpp" />
+    <ClCompile Include="src\Errors.cpp" />
+    <ClCompile Include="src\Json.cpp" />
+    <ClCompile Include="src\NameCodec.cpp" />
+    <ClCompile Include="src\NotesService.cpp" />
+    <ClCompile Include="src\PasswordEntry.cpp" />
+    <ClCompile Include="src\SearchService.cpp" />
+    <ClCompile Include="src\Vault.cpp" />
+    <ClCompile Include="src\VaultManager.cpp" />
+    <ClCompile Include="src\ViewerService.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
